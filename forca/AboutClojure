@@ -1,5 +1,8 @@
 #Clojure - Roda na JVM
 *************************************************************************
+#Forçar o reload (Tosco)
+(require '[forca.core :as forca] :reload)
+
 #Leiningen - Para ajudar a criar o projeto
 https://leiningen.org/#install
 #Copiar o arquivo lein para o bin
@@ -32,9 +35,6 @@ lein new app forca
 
 #nil é o nullo do Cloujure
 
-#Forçar o reload (Tosco)
-(require '[forca.core :as forca] :reload)
-
 #Não igual
 (not= 10 11)
 
@@ -51,9 +51,9 @@ Resultado: (2 4 6 8)
 
 #Removendo do array geral
 (def nums [1 2 3 4 5 6 7 8 9 10])
-(remove par nums)                 <- Remove geral
+(remove par nums)                 <- Remove os numeros pares
+(remove (fn [x] (not= 0 (rem x 2))) numeros) <- Remove os numeros impares
 
-*************************************************************************
 #Entendendo essa função
 (defn jogo [vidas]
   (if (= vidas 0)           //IF
@@ -67,7 +67,6 @@ Resultado: (2 4 6 8)
   )
 )
 
-*************************************************************************
 #Chamando a nova função passando um conjunto de letras q não repete
 (forca/jogo 0 "MELANCIA" #{"A" "M"})
 
@@ -77,26 +76,29 @@ Resultado: (2 4 6 8)
 (conj conjunto "X")       <- Add no conjunto
 (disj conjunto "X")       <- Remove no conjunto
 
-*************************************************************************
 #Verifica se é par
 (defn par [x] (= 0 (rem x 2)))
 
 #Verifica se é impar
 (defn impar [x] (not= 0 (rem x 2)))
+(defn impar [x] (   = 1 (rem x 2)))
 
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
-*************************************************************************
+#Utilizando o contains
+(defn letras-faltantes [palavra acertos] <- função q recebe 2 parametros
+  (remove (fn [letra] (contains? acertos (str letra))) palavra)
+  <- Acima: Remove acertos da palavra
+)
+#Testando
+(letras-faltantes "melancia" #{"m"})
+#Retorno -> (\e \l \a \n \c \i \a)
+
+#Verifica se é um array vazio
+(empty? (letras-faltantes palavra acertos))
+
+#Testando a forca
+(forca/jogo 5 "MELANCIA" #{"M" "E"})
+(forca/jogo 5 "MELANCIA" #{"M" "E" "L" "A" "N" "C" "I"})
+
+#Contains
+(def palavra #{"A" "L" "U" "R"})
+(contains? palavra "A")
